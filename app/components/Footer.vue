@@ -2,9 +2,10 @@
  <footer class="block">
   <div class="content has-text-centered">
     <p>
-      <strong><router-link :to="{name: 'MentionsLegales'}"> Mentions Légales</router-link> </strong>
-  </div>
-</footer>
+      <strong><router-link to="/MentionsLegales"> Mentions Légales</router-link> </strong>
+      <div><p><strong><router-link to="/AdminConnect"><i class="fas fa-users-cog"></i></router-link></strong></p></div> 
+    </div>
+  </footer>
 </template>
 
 <script>

@@ -22,20 +22,24 @@
    <p class="level-item has-text-centered has-text-weight-bold is-size-4 ">
     <a class="link is-info, box"><router-link :to= " {name:'Dons'}">Dons</router-link></a>
   </p>
-  
+  <p>
+       <a class="navbar-item">
+            <strong><router-link to= "/AdminConnect">Admin</router-link></strong>
+          </a>
+  </p>
 </nav>
 </div>
 </header>
 </template>
 
 <script>
-export default {
- 
-}
+
 </script>
 
 <style>
 @import '../assets/scss/_header';
 
-
+a.router-link-active {
+  
+}
 </style>

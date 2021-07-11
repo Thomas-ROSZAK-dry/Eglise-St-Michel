@@ -3,76 +3,77 @@
   <div class="style-form" >
     <form  v-on:submit.prevent="checkForm" class="form" >
     
-    <div class="form-control" :class="{invalid: userNameValidity ==='invalid'}" >
+    <div class="form-control">
       <label for="Votre nom">Votre Nom</label>
     <input type="text" id="user-name" name="user-name" v-model.trim="userName"/>
     </div>
-    <p class="errormessage" v-if="userNameValidity ==='invalid'" >Merci de saisir votre nom</p>
-
-    <div class="form-control" :class="{invalid: emailValidity ==='invalid'}" >
+    
+    <div class="form-control">
       <label for="Votre adresse Mail">Votre email</label>
      <input type="text" id="email" name="email" v-model.trim="email"/>
     </div>
-    <p class="errormessage" v-if="emailValidity ==='invalid'" >Merci de saisir votre email</p>
+   
   
-   <div class="form-control" :class="{invalid: sujetValidity ==='invalid'}" >
+   <div class="form-control" >
   <label for="Sujet">Sujet</label>
     <input type="text" id="sujet" name="sujet" v-model.trim="sujet">
     </div>
- <p class="errormessage" v-if="sujetValidity ==='invalid'" >Merci de saisir le champs sujet</p>
-
-    <div class="form-control" :class="{invalid: textValidity ==='invalid'}" >
+ 
+    <div class="form-control">
     <textarea name="sujet" id="" cols="30" rows="10" v-model.trim="text" >
     </textarea>
     </div>
-    <p class="errormessage" v-if="textValidity ==='invalid'" >Merci de saisir votre demande</p>
- 
-    <div>
+        <div>
     <button> Envoyer</button>
     </div>
-
+ <p v-if="invalidInput"> One or more input fields are invalid. Please check your provided data.</p>
+        <p v-if="error">{{error}}</p>
   </form>
   </div>
   </div>
 </template>
 
 <script>
+import axios from "axios";
+
 export default {
-  data: function() {
+  data() {
     return {
       userName:'',
       email: '',
-      sujet:"",
-      text:"",
-      errorList: [],
-      userNameValidity:'pending',
-      emailValidity:'pending',
-      sujetValidity:'pending',
-      textValidity:'pending',
+      sujet:'',
+      text:'',
+      invalidInput: false,
+      error:null,
+      
     }
   },
   methods: {
     checkForm() {
-        if (this.userName === '') {
-         this.userNameValidity='invalid';
-       } else{
-         this.userNameValidity='valid';
-       }
-        if (this.email === '') {
-         this.emailValidity='invalid';
-       } else{
-         this.emailValidity='valid';
-       }
-        if (this.sujet === '') {
-         this.sujetValidity='invalid';
-       } else{
-         this.sujetValidity='valid';
-       }
-         if (this.text === '') {
-         this.textValidity='invalid';
-       } else{
-         this.textValidity='valid';
-       }
+        if (this.userName === '' || this.email === '' || this.sujet === '' || this.text === '') {
+        this.invalidInput = true;
+        return;
+      }
+      this.invalidInput = false;
+      this.error= null;
+     
+      
+       axios.post('https://eglise-st-michel-default-rtdb.europe-west1.firebasedatabase.app//messages.json', {
+       name: this.userName,
+       mail: this.email,
+       subject: this.sujet,
+       message: this.text,
+       
+        })
+        // permets d'idnquer une erreur côté serveur 
+        .catch((error) => {
+        console.log(error);
+        this.error ='failed to execute the request . Try it later'
+        }),
+      this.userName = '',
+      this.email='',
+      this.sujet='',
+      this.text=''
 }
 }
 }

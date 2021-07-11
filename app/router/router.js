@@ -16,6 +16,8 @@ import ErrorView from '../views/ErrorView';
 import StMichelView from '../views/StMichelView';
 import ContactDeuxView from '../views/ContactDeuxView';
 import ImagesView from '../views/ImagesView';
+import AdminBoardView from '../views/AdminBoardView';
+import AdminConnectView from '../views/AdminConnectView';
 
 // informer Vue qu'il doit utiliser le VueRouter
 // VueRouter est un "plugin" pour vue
@@ -40,7 +42,8 @@ const routeList = [
     {name: 'StMichel', path: '/StMichel', component: StMichelView},
     {name: 'ContactDeux', path: '/ContactDeux', component: ContactDeuxView},
     {name: 'Images', path: '/Images', component: ImagesView},
-
+    {name: 'AdminBoard', path: '/AdminBoard', component: AdminBoardView},
+    {name: 'AdminConnect', path: '/AdminConnect', component: AdminConnectView},
 ];
 
 // déclarer un nouveau routeur avec ces routes
